@@ -204,6 +204,54 @@ const Home = () => {
         });
       });
 
+      // Academic Journey animation for responsive design
+      const educationCards = document.querySelectorAll(".education-card");
+      educationCards.forEach((card, index) => {
+        const cardElement = card as HTMLElement;
+        const isLeft = index % 2 === 0;
+        
+        // Set initial state for mobile and desktop
+        gsap.set(cardElement, {
+          opacity: 0,
+          y: 50,
+          x: window.innerWidth > 768 ? (isLeft ? -100 : 100) : 0,
+          scale: 0.9
+        });
+        
+        // Responsive animation
+        ScrollTrigger.create({
+          trigger: cardElement,
+          start: "top 85%",
+          end: "top 30%",
+          onEnter: () => {
+            gsap.to(cardElement, {
+              opacity: 1,
+              y: 0,
+              x: 0,
+              scale: 1,
+              duration: 0.8,
+              ease: "power3.out"
+            });
+          },
+          onLeave: () => {
+            gsap.to(cardElement, {
+              scale: 0.95,
+              opacity: 0.8,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+          },
+          onEnterBack: () => {
+            gsap.to(cardElement, {
+              scale: 1,
+              opacity: 1,
+              duration: 0.4,
+              ease: "power2.out"
+            });
+          }
+        });
+      });
+
       // Global mouse tracking for subtle parallax effects
       const handleMouseMove = (e: MouseEvent) => {
         mousePos.current = { x: e.clientX, y: e.clientY };
@@ -258,7 +306,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 font-body overflow-x-hidden">
+    <div className="min-h-screen bg-slate-950 text-slate-50 font-body overflow-x-hidden max-w-[880px] mx-auto">
       {/* Floating Island Navigation */}
       <nav 
         ref={navRef}
@@ -430,27 +478,27 @@ const Home = () => {
 
       {/* About Section */}
       <section ref={aboutRef} id="about" className="py-32 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="w-full mx-auto px-4 sm:px-6">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">About Me</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="animate-on-scroll perspective-1000">
-              <div className="w-96 h-96 mx-auto rounded-3xl glass p-8 flex items-center justify-center transform hover:rotateY-6 transition-all duration-500 preserve-3d">
-                <GraduationCap size={120} className="text-blue-400/80" />
+              <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto rounded-3xl glass p-6 sm:p-8 flex items-center justify-center transform hover:rotateY-6 transition-all duration-500 preserve-3d">
+                <GraduationCap size={80} className="text-blue-400/80 sm:w-[100px] sm:h-[100px] lg:w-[120px] lg:h-[120px]" />
               </div>
             </div>
             
-            <div className="animate-on-scroll space-y-8">
-              <p className="text-xl text-slate-300 leading-relaxed font-light">
+            <div className="animate-on-scroll space-y-6 lg:space-y-8">
+              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed font-light">
                 I am a dedicated <span className="text-blue-400 font-semibold">PhD researcher</span> in Electrical Engineering at IIT Patna, specializing in <span className="text-blue-400 font-semibold">semiconductor device physics</span> and <span className="text-blue-400 font-semibold">VLSI design</span>. My research focuses on nanowire GAA MOSFETs, with particular emphasis on process-induced effects and their impact on device performance.
               </p>
-              <p className="text-xl text-slate-300 leading-relaxed font-light">
+              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed font-light">
                 With a strong academic background including an M.Tech in VLSI Design from NIT Kurukshetra and B.Tech in Electronics and Communication from NIT Nagaland, I bring both theoretical knowledge and practical experience to my research.
               </p>
-              <p className="text-xl text-slate-300 leading-relaxed font-light">
+              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed font-light">
                 Currently serving as <span className="text-blue-400 font-semibold">Chair of the IEEE EDS student branch chapter</span> at IIT Patna, I am passionate about advancing semiconductor technology and contributing to the scientific community through high-impact research publications.
               </p>
             </div>
@@ -460,7 +508,7 @@ const Home = () => {
 
       {/* Skills Section */}
       <section ref={skillsRef} id="skills" className="py-32">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="w-full mx-auto px-4 sm:px-6">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">Technical Skills</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
@@ -469,7 +517,7 @@ const Home = () => {
           {/* Software Tools */}
           <div className="animate-on-scroll mb-20">
             <h3 className="text-3xl font-bold mb-12 text-blue-400 font-display text-center">Software Tools</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 perspective-1000">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 lg:gap-8 perspective-1000">
               {[
                 { name: 'MATLAB', icon: Code2, color: 'from-orange-500 to-red-500' },
                 { name: 'TCAD', icon: Cpu, color: 'from-blue-500 to-cyan-500' },
@@ -480,13 +528,13 @@ const Home = () => {
               ].map((tool, index) => (
                 <div
                   key={tool.name}
-                  className="skill-card glass p-8 rounded-2xl border border-slate-700/50 hover:border-blue-500/50 text-center group cursor-pointer preserve-3d"
+                  className="skill-card glass p-4 sm:p-6 lg:p-8 rounded-2xl border border-slate-700/50 hover:border-blue-500/50 text-center group cursor-pointer preserve-3d"
                   data-testid={`skill-${tool.name.toLowerCase().replace(' ', '-')}`}
                 >
-                  <div className={`w-16 h-16 bg-gradient-to-br ${tool.color} rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
-                    <tool.icon className="text-white" size={32} />
+                  <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br ${tool.color} rounded-2xl mx-auto mb-3 sm:mb-4 lg:mb-6 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                    <tool.icon className="text-white w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
                   </div>
-                  <p className="text-lg font-semibold group-hover:text-blue-400 transition-colors duration-300">{tool.name}</p>
+                  <p className="text-sm sm:text-base lg:text-lg font-semibold group-hover:text-blue-400 transition-colors duration-300">{tool.name}</p>
                 </div>
               ))}
             </div>
@@ -495,7 +543,7 @@ const Home = () => {
           {/* Research Areas */}
           <div className="animate-on-scroll mb-20">
             <h3 className="text-3xl font-bold mb-12 text-blue-400 font-display text-center">Research Areas</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 perspective-1000">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 perspective-1000">
               {[
                 { 
                   name: 'Machine Learning', 
@@ -518,14 +566,14 @@ const Home = () => {
               ].map((area, index) => (
                 <div
                   key={area.name}
-                  className="skill-card glass p-8 rounded-2xl border border-slate-700/50 hover:border-blue-500/50 group cursor-pointer preserve-3d"
+                  className="skill-card glass p-6 lg:p-8 rounded-2xl border border-slate-700/50 hover:border-blue-500/50 group cursor-pointer preserve-3d"
                   data-testid={`research-${area.name.toLowerCase().replace(' ', '-')}`}
                 >
-                  <div className={`w-16 h-16 bg-gradient-to-br ${area.color} rounded-2xl mb-6 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
-                    <area.icon className="text-white" size={32} />
+                  <div className={`w-14 h-14 lg:w-16 lg:h-16 bg-gradient-to-br ${area.color} rounded-2xl mb-4 lg:mb-6 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                    <area.icon className="text-white w-7 h-7 lg:w-8 lg:h-8" />
                   </div>
-                  <h4 className="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors duration-300">{area.name}</h4>
-                  <p className="text-slate-400 leading-relaxed">{area.desc}</p>
+                  <h4 className="text-lg lg:text-xl font-bold mb-2 lg:mb-3 group-hover:text-blue-400 transition-colors duration-300">{area.name}</h4>
+                  <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">{area.desc}</p>
                 </div>
               ))}
             </div>
@@ -534,7 +582,7 @@ const Home = () => {
           {/* Core Sciences */}
           <div className="animate-on-scroll">
             <h3 className="text-3xl font-bold mb-12 text-blue-400 font-display text-center">Core Sciences</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto perspective-1000">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto perspective-1000">
               {[
                 { 
                   name: 'Physics', 
@@ -549,14 +597,14 @@ const Home = () => {
               ].map((science, index) => (
                 <div
                   key={science.name}
-                  className="skill-card glass p-8 rounded-2xl border border-slate-700/50 hover:border-blue-500/50 group cursor-pointer preserve-3d"
+                  className="skill-card glass p-6 lg:p-8 rounded-2xl border border-slate-700/50 hover:border-blue-500/50 group cursor-pointer preserve-3d"
                   data-testid={`science-${science.name.toLowerCase()}`}
                 >
-                  <div className={`w-16 h-16 bg-gradient-to-br ${science.color} rounded-2xl mb-6 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
-                    <GraduationCap className="text-white" size={32} />
+                  <div className={`w-14 h-14 lg:w-16 lg:h-16 bg-gradient-to-br ${science.color} rounded-2xl mb-4 lg:mb-6 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                    <GraduationCap className="text-white w-7 h-7 lg:w-8 lg:h-8" />
                   </div>
-                  <h4 className="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors duration-300">{science.name}</h4>
-                  <p className="text-slate-400 leading-relaxed">{science.desc}</p>
+                  <h4 className="text-lg lg:text-xl font-bold mb-2 lg:mb-3 group-hover:text-blue-400 transition-colors duration-300">{science.name}</h4>
+                  <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">{science.desc}</p>
                 </div>
               ))}
             </div>
@@ -566,7 +614,7 @@ const Home = () => {
 
       {/* Education Section */}
       <section id="education" className="py-32 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="w-full mx-auto px-4 sm:px-6">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">Academic Journey</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
@@ -660,7 +708,7 @@ const Home = () => {
 
       {/* Publications Section */}
       <section id="publications" className="py-32">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="w-full mx-auto px-4 sm:px-6">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">Publications</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
@@ -752,7 +800,7 @@ const Home = () => {
 
       {/* Work Experience Section */}
       <section id="experience" className="py-32 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="w-full mx-auto px-4 sm:px-6">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">Work Experience</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
@@ -806,7 +854,7 @@ const Home = () => {
 
       {/* Contact Section */}
       <section id="contact" className="py-32">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="w-full mx-auto px-4 sm:px-6">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">Let's Connect</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto mb-8"></div>
