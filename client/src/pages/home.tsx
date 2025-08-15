@@ -192,8 +192,8 @@ const Home = () => {
             rotateX: rotateX,
             rotateY: rotateY,
             transformPerspective: 1000,
-            duration: 0.2,
-            ease: "power2.out"
+            duration: 0.05,
+            ease: "none"
           });
         });
         
@@ -217,21 +217,21 @@ const Home = () => {
         gsap.to(".parallax-light", {
           x: xPercent * 50,
           y: yPercent * 50,
-          duration: 1,
+          duration: 0.8,
           ease: "power2.out"
         });
         
         gsap.to(".parallax-medium", {
           x: xPercent * 30,
           y: yPercent * 30,
-          duration: 1,
+          duration: 0.6,
           ease: "power2.out"
         });
         
         gsap.to(".parallax-heavy", {
           x: xPercent * 15,
           y: yPercent * 15,
-          duration: 1,
+          duration: 0.4,
           ease: "power2.out"
         });
       };
@@ -250,10 +250,9 @@ const Home = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      gsap.to(window, {
-        scrollTo: { y: element, offsetY: 80 },
-        duration: 1.2,
-        ease: "power3.inOut"
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
       });
     }
     setMobileMenuOpen(false);
@@ -265,7 +264,7 @@ const Home = () => {
       <nav 
         ref={navRef}
         className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300"
-        style={{ transform: "translateX(-50%) translateY(-100px)" }}
+        style={{ transform: "translateX(-50%) translateY(0px)" }}
       >
         <div className="glass-nav rounded-full px-8 py-4 shadow-2xl">
           <div className="flex items-center space-x-8">
@@ -400,9 +399,9 @@ const Home = () => {
           </div>
           
           <h1 className="hero-name text-6xl md:text-8xl font-black mb-8 font-display leading-none">
-            <span className="text-gradient-blue">Ashraf</span>
+            <span className="text-white drop-shadow-2xl" style={{ textShadow: '0 0 40px rgba(255,255,255,0.8), 0 0 80px rgba(59,130,246,0.4)' }}>Ashraf</span>
             <br />
-            <span className="text-white drop-shadow-2xl" style={{ textShadow: '0 0 30px rgba(255,255,255,0.5), 0 0 60px rgba(59,130,246,0.3)' }}>Maniyar</span>
+            <span className="text-gradient-blue opacity-90">Maniyar</span>
           </h1>
           
           <div className="hero-description text-xl md:text-3xl text-slate-300 mb-12 h-20 font-light">
