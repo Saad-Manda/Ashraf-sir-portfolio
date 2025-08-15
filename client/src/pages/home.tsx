@@ -19,6 +19,7 @@ const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
   const skillsRef = useRef<HTMLElement>(null);
+  const mousePos = useRef({ x: 0, y: 0 });
 
   const texts = [
     'PhD Researcher in Electrical Engineering',
@@ -141,27 +142,105 @@ const Home = () => {
         start: "top 85%"
       });
 
-      // Skill cards hover animations
+      // Enhanced floating background elements
+      gsap.set(".bg-particle", { 
+        scale: 0,
+        rotation: 0
+      });
+      
+      gsap.to(".bg-particle", {
+        scale: 1,
+        rotation: 360,
+        duration: 20,
+        ease: "none",
+        repeat: -1,
+        stagger: {
+          each: 2,
+          from: "random"
+        }
+      });
+
+      // Floating geometric shapes
+      gsap.to(".floating-shape", {
+        y: "random(-30, 30)",
+        x: "random(-20, 20)",
+        rotation: "random(-15, 15)",
+        duration: "random(4, 8)",
+        ease: "power1.inOut",
+        repeat: -1,
+        yoyo: true,
+        stagger: {
+          each: 0.3,
+          from: "random"
+        }
+      });
+
+      // Skill cards cursor-following hover animations
       const skillCards = document.querySelectorAll(".skill-card");
       skillCards.forEach((card) => {
-        card.addEventListener("mouseenter", () => {
-          gsap.to(card, {
-            rotateY: 5,
-            rotateX: -5,
-            duration: 0.3,
+        const cardElement = card as HTMLElement;
+        
+        cardElement.addEventListener("mousemove", (e) => {
+          const rect = cardElement.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          
+          const rotateX = -(y / rect.height) * 20;
+          const rotateY = (x / rect.width) * 20;
+          
+          gsap.to(cardElement, {
+            rotateX: rotateX,
+            rotateY: rotateY,
+            transformPerspective: 1000,
+            duration: 0.2,
             ease: "power2.out"
           });
         });
         
-        card.addEventListener("mouseleave", () => {
-          gsap.to(card, {
-            rotateY: 0,
+        cardElement.addEventListener("mouseleave", () => {
+          gsap.to(cardElement, {
             rotateX: 0,
-            duration: 0.3,
+            rotateY: 0,
+            duration: 0.4,
             ease: "power2.out"
           });
         });
       });
+
+      // Global mouse tracking for subtle parallax effects
+      const handleMouseMove = (e: MouseEvent) => {
+        mousePos.current = { x: e.clientX, y: e.clientY };
+        
+        const xPercent = (e.clientX / window.innerWidth - 0.5) * 2;
+        const yPercent = (e.clientY / window.innerHeight - 0.5) * 2;
+        
+        gsap.to(".parallax-light", {
+          x: xPercent * 50,
+          y: yPercent * 50,
+          duration: 1,
+          ease: "power2.out"
+        });
+        
+        gsap.to(".parallax-medium", {
+          x: xPercent * 30,
+          y: yPercent * 30,
+          duration: 1,
+          ease: "power2.out"
+        });
+        
+        gsap.to(".parallax-heavy", {
+          x: xPercent * 15,
+          y: yPercent * 15,
+          duration: 1,
+          ease: "power2.out"
+        });
+      };
+      
+      window.addEventListener("mousemove", handleMouseMove);
+      
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+      };
 
     }, [heroRef, navRef, aboutRef, skillsRef]);
 
@@ -242,18 +321,77 @@ const Home = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(147,51,234,0.08),transparent_50%)]"></div>
         
-        {/* Enhanced floating particles */}
+        {/* Enhanced floating particles and background elements */}
         <div className="absolute inset-0">
-          {[...Array(8)].map((_, i) => (
+          {[...Array(12)].map((_, i) => (
             <div
               key={i}
-              className={`particle absolute w-1 h-1 bg-blue-400/60 rounded-full blur-sm`}
+              className={`particle absolute w-1 h-1 bg-blue-400/60 rounded-full blur-sm parallax-light`}
               style={{
-                top: `${10 + (i * 11)}%`,
-                left: `${5 + (i * 12)}%`,
+                top: `${5 + (i * 8)}%`,
+                left: `${3 + (i * 8.5)}%`,
               }}
             />
           ))}
+          
+          {/* Geometric floating shapes */}
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={`shape-${i}`}
+              className={`floating-shape absolute parallax-medium`}
+              style={{
+                top: `${15 + (i * 15)}%`,
+                left: `${10 + (i * 15)}%`,
+                width: `${8 + (i * 3)}px`,
+                height: `${8 + (i * 3)}px`,
+              }}
+            >
+              {i % 3 === 0 && (
+                <div className="w-full h-full border border-blue-400/30 rounded-full animate-pulse" />
+              )}
+              {i % 3 === 1 && (
+                <div className="w-full h-full border border-purple-400/30 rotate-45" />
+              )}
+              {i % 3 === 2 && (
+                <div className="w-full h-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded" />
+              )}
+            </div>
+          ))}
+          
+          {/* Larger background particles */}
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={`bg-${i}`}
+              className={`bg-particle absolute parallax-heavy`}
+              style={{
+                top: `${20 + (i * 12)}%`,
+                left: `${15 + (i * 10)}%`,
+                width: `${20 + (i * 5)}px`,
+                height: `${20 + (i * 5)}px`,
+              }}
+            >
+              <div className="w-full h-full bg-gradient-to-br from-blue-500/10 to-indigo-600/10 rounded-full blur-xl" />
+            </div>
+          ))}
+          
+          {/* Quirky professional elements - floating code snippets */}
+          <div className="absolute top-20 right-10 parallax-light opacity-20">
+            <div className="font-mono text-blue-400/40 text-xs rotate-12 animate-pulse">
+              {'{ research: "nanowire" }'}
+            </div>
+          </div>
+          
+          <div className="absolute bottom-32 left-16 parallax-medium opacity-20">
+            <div className="font-mono text-purple-400/40 text-xs -rotate-6 animate-pulse">
+              PhD.execute();
+            </div>
+          </div>
+          
+          <div className="absolute top-1/3 right-1/4 parallax-heavy opacity-20">
+            <div className="font-mono text-green-400/40 text-xs rotate-3 animate-pulse">
+              IEEE.publish(research);
+            </div>
+          </div>
         </div>
 
         <div className="relative z-10 text-center max-w-5xl mx-auto px-6">
@@ -261,8 +399,10 @@ const Home = () => {
             <span className="text-blue-400 text-xl font-medium tracking-wide">Hi 👋, I am</span>
           </div>
           
-          <h1 className="hero-name text-6xl md:text-8xl font-black mb-8 font-display text-gradient-blue leading-none">
-            Ashraf Maniyar
+          <h1 className="hero-name text-6xl md:text-8xl font-black mb-8 font-display leading-none">
+            <span className="text-gradient-blue">Ashraf</span>
+            <br />
+            <span className="text-white drop-shadow-2xl" style={{ textShadow: '0 0 30px rgba(255,255,255,0.5), 0 0 60px rgba(59,130,246,0.3)' }}>Maniyar</span>
           </h1>
           
           <div className="hero-description text-xl md:text-3xl text-slate-300 mb-12 h-20 font-light">
@@ -435,8 +575,13 @@ const Home = () => {
           </div>
 
           <div className="relative max-w-4xl mx-auto">
-            {/* Timeline line */}
+            {/* Enhanced timeline with flowing elements */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 to-indigo-500"></div>
+            
+            {/* Flowing orbs along timeline */}
+            <div className="absolute left-1/2 top-10 w-3 h-3 bg-blue-400/60 rounded-full animate-pulse parallax-light" style={{ transform: 'translateX(-50%)' }}></div>
+            <div className="absolute left-1/2 top-1/2 w-2 h-2 bg-purple-400/60 rounded-full animate-pulse parallax-medium" style={{ transform: 'translateX(-50%)', animationDelay: '1s' }}></div>
+            <div className="absolute left-1/2 bottom-20 w-4 h-4 bg-indigo-400/60 rounded-full animate-pulse parallax-light" style={{ transform: 'translateX(-50%)', animationDelay: '2s' }}></div>
 
             {/* Education entries */}
             {[
@@ -469,7 +614,7 @@ const Home = () => {
                 className="animate-on-scroll flex flex-col md:flex-row items-center mb-16 relative"
               >
                 <div className={`md:w-1/2 ${edu.side === 'left' ? 'md:pr-12 md:text-right' : 'md:pl-12 md:order-3'} mb-8 md:mb-0`}>
-                  <Card className="glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105">
+                  <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105">
                     <CardContent className="p-8">
                       <h3 className="text-2xl font-bold text-blue-400 mb-3 font-display">{edu.degree}</h3>
                       <p className="text-slate-300 mb-3 text-lg">{edu.institution}</p>
@@ -491,7 +636,7 @@ const Home = () => {
           <div className="animate-on-scroll mt-24">
             <h3 className="text-3xl font-bold mb-12 text-blue-400 text-center font-display">Academic Achievements</h3>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <Card className="glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105">
+              <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105">
                 <CardContent className="p-8">
                   <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl mb-6 flex items-center justify-center shadow-lg">
                     <Trophy className="text-white" size={32} />
@@ -500,7 +645,7 @@ const Home = () => {
                   <p className="text-slate-400">GATE-2016, 2018 (Electronics and Communication Engineering)</p>
                 </CardContent>
               </Card>
-              <Card className="glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105">
+              <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105">
                 <CardContent className="p-8">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl mb-6 flex items-center justify-center shadow-lg">
                     <Award className="text-white" size={32} />
@@ -547,7 +692,7 @@ const Home = () => {
                 }
               ].map((paper, index) => (
                 <div key={paper.title} className="animate-on-scroll">
-                  <Card className="glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group">
+                  <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group">
                     <CardContent className="p-8">
                       <div className="flex items-start gap-6">
                         <div className={`w-14 h-14 bg-gradient-to-br ${paper.color} rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 flex-shrink-0 mt-1`}>
@@ -585,7 +730,7 @@ const Home = () => {
                 }
               ].map((paper, index) => (
                 <div key={paper.title} className="animate-on-scroll">
-                  <Card className="glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group">
+                  <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group">
                     <CardContent className="p-8">
                       <div className="flex items-start gap-6">
                         <div className={`w-14 h-14 bg-gradient-to-br ${paper.color} rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 flex-shrink-0 mt-1`}>
@@ -639,7 +784,7 @@ const Home = () => {
               }
             ].map((exp, index) => (
               <div key={exp.role} className="animate-on-scroll">
-                <Card className="glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group">
+                <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group">
                   <CardContent className="p-8">
                     <div className="flex items-start gap-6">
                       <div className={`w-16 h-16 bg-gradient-to-br ${exp.color} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 flex-shrink-0`}>
@@ -698,7 +843,7 @@ const Home = () => {
               ].map((contact, index) => (
                 <Card 
                   key={contact.label}
-                  className="glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105 group cursor-pointer"
+                  className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105 group cursor-pointer"
                 >
                   <CardContent className="p-8 text-center">
                     <div className={`w-16 h-16 bg-gradient-to-br ${contact.color} rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
