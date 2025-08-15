@@ -233,16 +233,18 @@ const Home = () => {
         });
       });
 
-      // Enhanced floating background elements
+      // Enhanced floating background elements with wider range
       gsap.set(".bg-particle", { 
         scale: 0,
         rotation: 0
       });
       
       gsap.to(".bg-particle", {
-        scale: 1,
+        scale: "random(0.8, 1.5)",
         rotation: 360,
-        duration: 20,
+        x: "random(-100, 100)",
+        y: "random(-50, 50)",
+        duration: "random(15, 25)",
         ease: "none",
         repeat: -1,
         stagger: {
@@ -251,17 +253,18 @@ const Home = () => {
         }
       });
 
-      // Floating geometric shapes
+      // Floating geometric shapes with expanded movement
       gsap.to(".floating-shape", {
-        y: "random(-30, 30)",
-        x: "random(-20, 20)",
-        rotation: "random(-15, 15)",
-        duration: "random(4, 8)",
-        ease: "power1.inOut",
+        y: "random(-80, 80)",
+        x: "random(-60, 60)",
+        rotation: "random(-45, 45)",
+        scale: "random(0.8, 1.3)",
+        duration: "random(6, 12)",
+        ease: "sine.inOut",
         repeat: -1,
         yoyo: true,
         stagger: {
-          each: 0.3,
+          each: 0.5,
           from: "random"
         }
       });
@@ -276,15 +279,22 @@ const Home = () => {
           const x = e.clientX - rect.left - rect.width / 2;
           const y = e.clientY - rect.top - rect.height / 2;
           
-          const rotateX = -(y / rect.height) * 20;
-          const rotateY = (x / rect.width) * 20;
+          // Wider range with instant response like weight on thin support
+          const rotateX = -(y / rect.height) * 35;
+          const rotateY = (x / rect.width) * 35;
+          
+          // Additional weighted table effect - tilt more dramatically toward cursor
+          const distance = Math.sqrt(x * x + y * y);
+          const maxDistance = Math.sqrt(rect.width * rect.width + rect.height * rect.height) / 2;
+          const intensity = Math.min(distance / maxDistance, 1);
           
           gsap.to(cardElement, {
-            rotateX: rotateX,
-            rotateY: rotateY,
-            transformPerspective: 1000,
-            duration: 0.05,
-            ease: "none"
+            rotateX: rotateX * (1 + intensity * 0.5),
+            rotateY: rotateY * (1 + intensity * 0.5),
+            transformPerspective: 800,
+            duration: 0,
+            ease: "none",
+            scale: 1 + intensity * 0.02
           });
         });
         
@@ -292,8 +302,9 @@ const Home = () => {
           gsap.to(cardElement, {
             rotateX: 0,
             rotateY: 0,
-            duration: 0.4,
-            ease: "power2.out"
+            scale: 1,
+            duration: 0.8,
+            ease: "elastic.out(1, 0.3)"
           });
         });
       });
@@ -346,8 +357,8 @@ const Home = () => {
           y: element,
           offsetY: 80
         },
-        duration: 1.8,
-        ease: "power3.inOut"
+        duration: 2.5,
+        ease: "power4.inOut"
       });
     }
     setMobileMenuOpen(false);
