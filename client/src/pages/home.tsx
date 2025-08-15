@@ -204,64 +204,57 @@ const Home = () => {
         });
       });
 
-      // Academic Journey animation with reset and replay
+      // Reliable Academic Journey animation
       const educationCards = document.querySelectorAll(".education-card");
       educationCards.forEach((card, index) => {
         const cardElement = card as HTMLElement;
         const isLeft = index % 2 === 0;
         
-        // Set initial state for mobile and desktop
-        const resetAnimation = () => {
-          gsap.set(cardElement, {
-            opacity: 0,
-            y: 50,
-            x: window.innerWidth > 768 ? (isLeft ? -100 : 100) : 0,
-            scale: 0.9,
-            rotation: isLeft ? -5 : 5
-          });
+        // Consistent initial state
+        const initialState = {
+          opacity: 0,
+          y: 60,
+          x: window.innerWidth > 768 ? (isLeft ? -80 : 80) : 0,
+          scale: 0.95,
+          rotation: 0
         };
         
-        // Initialize with reset state
-        resetAnimation();
+        const animatedState = {
+          opacity: 1,
+          y: 0,
+          x: 0,
+          scale: 1,
+          rotation: 0
+        };
         
-        // Enhanced responsive animation with replay capability
+        // Set initial state
+        gsap.set(cardElement, initialState);
+        
+        // Create reliable animation with consistent triggers
         ScrollTrigger.create({
           trigger: cardElement,
-          start: "top 90%",
-          end: "bottom 10%",
-          onEnter: () => {
-            gsap.to(cardElement, {
-              opacity: 1,
-              y: 0,
-              x: 0,
-              scale: 1,
-              rotation: 0,
-              duration: 1.2,
-              ease: "power3.out",
-              delay: index * 0.2
-            });
+          start: "top 85%",
+          end: "top 15%",
+          toggleActions: "play none none reverse",
+          onToggle: (self) => {
+            if (self.isActive) {
+              // Animate in
+              gsap.to(cardElement, {
+                ...animatedState,
+                duration: 0.8,
+                ease: "power2.out",
+                delay: index * 0.1
+              });
+            } else {
+              // Animate out
+              gsap.to(cardElement, {
+                ...initialState,
+                duration: 0.4,
+                ease: "power2.in"
+              });
+            }
           },
-          onLeave: () => {
-            // Reset animation when leaving view
-            resetAnimation();
-          },
-          onEnterBack: () => {
-            // Replay animation when scrolling back
-            gsap.to(cardElement, {
-              opacity: 1,
-              y: 0,
-              x: 0,
-              scale: 1,
-              rotation: 0,
-              duration: 1,
-              ease: "power3.out",
-              delay: index * 0.15
-            });
-          },
-          onLeaveBack: () => {
-            // Reset when leaving upward
-            resetAnimation();
-          }
+          refreshPriority: -1
         });
       });
 
@@ -326,18 +319,18 @@ const Home = () => {
         className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300"
         style={{ transform: "translateX(-50%) translateY(0px)" }}
       >
-        <div className="glass-nav rounded-full px-8 py-4 shadow-2xl">
+        <div className="glass-nav rounded-full px-6 py-3 shadow-2xl">
           <div className="flex items-center space-x-8">
-            <div className="text-lg font-bold text-gradient-blue font-display">
+            <div className="text-base font-bold text-gradient-blue font-display">
               Ashraf Maniyar
             </div>
             
-            <div className="hidden md:flex space-x-6">
+            <div className="hidden md:flex space-x-4">
               {['Home', 'About', 'Skills', 'Education', 'Publications', 'Experience', 'Contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className="text-slate-300 hover:text-blue-400 transition-all duration-300 text-sm font-medium tracking-wide hover:scale-105"
+                  className="text-slate-300 hover:text-blue-400 transition-all duration-300 text-xs font-medium tracking-wide hover:scale-105"
                   data-testid={`nav-${item.toLowerCase()}`}
                 >
                   {item}
@@ -357,13 +350,13 @@ const Home = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 mt-2 glass-nav rounded-2xl p-6 shadow-2xl md:hidden">
+          <div className="absolute top-full left-0 right-0 mt-2 glass-nav rounded-2xl p-4 shadow-2xl md:hidden">
             <div className="space-y-4">
               {['Home', 'About', 'Skills', 'Education', 'Publications', 'Experience', 'Contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className="block w-full text-left text-slate-300 hover:text-blue-400 transition-colors duration-300 py-2 text-sm font-medium"
+                  className="block w-full text-left text-slate-300 hover:text-blue-400 transition-colors duration-300 py-2 text-xs font-medium"
                   data-testid={`mobile-nav-${item.toLowerCase()}`}
                 >
                   {item}
