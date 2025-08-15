@@ -440,7 +440,6 @@ const Home = () => {
 
         <div className="relative z-10 text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="hero-greeting mb-8">
-            <span className="text-blue-400 text-xl font-medium tracking-wide">Hi 👋, I am</span>
           </div>
           
           <h1 className="hero-name text-6xl md:text-8xl font-black mb-8 font-display leading-none">
