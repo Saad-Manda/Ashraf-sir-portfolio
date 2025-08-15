@@ -142,6 +142,97 @@ const Home = () => {
         start: "top 85%"
       });
 
+      // Education cards storytelling animation
+      const educationCards = document.querySelectorAll(".education-card");
+      educationCards.forEach((card, index) => {
+        const cardElement = card as HTMLElement;
+        const isLeft = index % 2 === 0;
+        
+        // Initial position - cards start off-screen
+        gsap.set(cardElement, {
+          x: isLeft ? -400 : 400,
+          opacity: 0,
+          rotation: isLeft ? -15 : 15,
+          scale: 0.8
+        });
+        
+        // Animation to bring cards into timeline
+        ScrollTrigger.create({
+          trigger: cardElement,
+          start: "top 90%",
+          end: "top 30%",
+          onEnter: () => {
+            const tl = gsap.timeline();
+            
+            // Phase 1: Card appears and moves toward timeline
+            tl.to(cardElement, {
+              opacity: 1,
+              x: isLeft ? -50 : 50,
+              rotation: isLeft ? -8 : 8,
+              scale: 0.95,
+              duration: 0.8,
+              ease: "power2.out"
+            })
+            // Phase 2: Card settles into final position
+            .to(cardElement, {
+              x: 0,
+              rotation: 0,
+              scale: 1,
+              duration: 0.6,
+              ease: "back.out(1.2)"
+            }, "-=0.3")
+            // Phase 3: Subtle pulse to highlight connection to timeline
+            .to(cardElement, {
+              scale: 1.02,
+              duration: 0.2,
+              ease: "power2.inOut",
+              yoyo: true,
+              repeat: 1
+            });
+          },
+          onLeave: () => {
+            gsap.to(cardElement, {
+              scale: 0.98,
+              opacity: 0.8,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+          },
+          onEnterBack: () => {
+            gsap.to(cardElement, {
+              scale: 1,
+              opacity: 1,
+              duration: 0.4,
+              ease: "power2.out"
+            });
+          }
+        });
+      });
+      
+      // Timeline orbs animation - they light up as cards join
+      const timelineOrbs = document.querySelectorAll(".timeline-orb");
+      timelineOrbs.forEach((orb, index) => {
+        ScrollTrigger.create({
+          trigger: `.education-card:nth-child(${index + 1})`,
+          start: "top 70%",
+          onEnter: () => {
+            gsap.to(orb, {
+              scale: 1.5,
+              duration: 0.3,
+              ease: "back.out(1.7)",
+              yoyo: true,
+              repeat: 1
+            });
+            
+            gsap.to(orb, {
+              boxShadow: "0 0 20px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.4)",
+              duration: 0.5,
+              ease: "power2.out"
+            });
+          }
+        });
+      });
+
       // Enhanced floating background elements
       gsap.set(".bg-particle", { 
         scale: 0,
@@ -250,9 +341,13 @@ const Home = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      gsap.to(window, {
+        scrollTo: {
+          y: element,
+          offsetY: 80
+        },
+        duration: 1.8,
+        ease: "power3.inOut"
       });
     }
     setMobileMenuOpen(false);
@@ -577,10 +672,11 @@ const Home = () => {
             {/* Enhanced timeline with flowing elements */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 to-indigo-500"></div>
             
-            {/* Flowing orbs along timeline */}
-            <div className="absolute left-1/2 top-10 w-3 h-3 bg-blue-400/60 rounded-full animate-pulse parallax-light" style={{ transform: 'translateX(-50%)' }}></div>
-            <div className="absolute left-1/2 top-1/2 w-2 h-2 bg-purple-400/60 rounded-full animate-pulse parallax-medium" style={{ transform: 'translateX(-50%)', animationDelay: '1s' }}></div>
-            <div className="absolute left-1/2 bottom-20 w-4 h-4 bg-indigo-400/60 rounded-full animate-pulse parallax-light" style={{ transform: 'translateX(-50%)', animationDelay: '2s' }}></div>
+            {/* Enhanced flowing orbs along timeline */}
+            <div className="absolute left-1/2 top-10 w-3 h-3 bg-blue-400/40 rounded-full animate-pulse parallax-light" style={{ transform: 'translateX(-50%)' }}></div>
+            <div className="absolute left-1/2 top-1/3 w-2 h-2 bg-purple-400/40 rounded-full animate-pulse parallax-medium" style={{ transform: 'translateX(-50%)', animationDelay: '1s' }}></div>
+            <div className="absolute left-1/2 top-2/3 w-2 h-2 bg-indigo-400/40 rounded-full animate-pulse parallax-light" style={{ transform: 'translateX(-50%)', animationDelay: '1.5s' }}></div>
+            <div className="absolute left-1/2 bottom-20 w-4 h-4 bg-cyan-400/40 rounded-full animate-pulse parallax-heavy" style={{ transform: 'translateX(-50%)', animationDelay: '2s' }}></div>
 
             {/* Education entries */}
             {[
@@ -610,7 +706,7 @@ const Home = () => {
             ].map((edu, index) => (
               <div 
                 key={edu.degree}
-                className="animate-on-scroll flex flex-col md:flex-row items-center mb-16 relative"
+                className="education-card flex flex-col md:flex-row items-center mb-16 relative"
               >
                 <div className={`md:w-1/2 ${edu.side === 'left' ? 'md:pr-12 md:text-right' : 'md:pl-12 md:order-3'} mb-8 md:mb-0`}>
                   <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105">
@@ -624,7 +720,7 @@ const Home = () => {
                   </Card>
                 </div>
                 <div className="relative md:order-2 z-10">
-                  <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full border-4 border-slate-950 shadow-lg"></div>
+                  <div className="timeline-orb w-6 h-6 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full border-4 border-slate-950 shadow-lg transition-all duration-300"></div>
                 </div>
                 <div className={`md:w-1/2 ${edu.side === 'right' ? 'md:pr-12' : 'md:pl-12'}`}></div>
               </div>
