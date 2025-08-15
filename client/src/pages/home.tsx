@@ -204,13 +204,13 @@ const Home = () => {
         });
       });
 
-      // Reliable Academic Journey animation
+      // Academic Journey animation - only animate in on scroll down
       const educationCards = document.querySelectorAll(".education-card");
       educationCards.forEach((card, index) => {
         const cardElement = card as HTMLElement;
         const isLeft = index % 2 === 0;
         
-        // Consistent initial state
+        // Initial hidden state
         const initialState = {
           opacity: 0,
           y: 60,
@@ -230,31 +230,23 @@ const Home = () => {
         // Set initial state
         gsap.set(cardElement, initialState);
         
-        // Create reliable animation with consistent triggers
+        // Animation only plays when scrolling down into view
         ScrollTrigger.create({
           trigger: cardElement,
           start: "top 85%",
-          end: "top 15%",
-          toggleActions: "play none none reverse",
-          onToggle: (self) => {
-            if (self.isActive) {
-              // Animate in
-              gsap.to(cardElement, {
-                ...animatedState,
-                duration: 0.8,
-                ease: "power2.out",
-                delay: index * 0.1
-              });
-            } else {
-              // Animate out
-              gsap.to(cardElement, {
-                ...initialState,
-                duration: 0.4,
-                ease: "power2.in"
-              });
-            }
+          onEnter: () => {
+            // Only animate in when scrolling down
+            gsap.to(cardElement, {
+              ...animatedState,
+              duration: 0.8,
+              ease: "power2.out",
+              delay: index * 0.1
+            });
           },
-          refreshPriority: -1
+          onLeaveBack: () => {
+            // Reset to initial state when scrolling up past the element
+            gsap.set(cardElement, initialState);
+          }
         });
       });
 
