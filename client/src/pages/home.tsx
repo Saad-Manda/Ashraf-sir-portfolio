@@ -204,50 +204,63 @@ const Home = () => {
         });
       });
 
-      // Academic Journey animation for responsive design
+      // Academic Journey animation with reset and replay
       const educationCards = document.querySelectorAll(".education-card");
       educationCards.forEach((card, index) => {
         const cardElement = card as HTMLElement;
         const isLeft = index % 2 === 0;
         
         // Set initial state for mobile and desktop
-        gsap.set(cardElement, {
-          opacity: 0,
-          y: 50,
-          x: window.innerWidth > 768 ? (isLeft ? -100 : 100) : 0,
-          scale: 0.9
-        });
+        const resetAnimation = () => {
+          gsap.set(cardElement, {
+            opacity: 0,
+            y: 50,
+            x: window.innerWidth > 768 ? (isLeft ? -100 : 100) : 0,
+            scale: 0.9,
+            rotation: isLeft ? -5 : 5
+          });
+        };
         
-        // Responsive animation
+        // Initialize with reset state
+        resetAnimation();
+        
+        // Enhanced responsive animation with replay capability
         ScrollTrigger.create({
           trigger: cardElement,
-          start: "top 85%",
-          end: "top 30%",
+          start: "top 90%",
+          end: "bottom 10%",
           onEnter: () => {
             gsap.to(cardElement, {
               opacity: 1,
               y: 0,
               x: 0,
               scale: 1,
-              duration: 0.8,
-              ease: "power3.out"
+              rotation: 0,
+              duration: 1.2,
+              ease: "power3.out",
+              delay: index * 0.2
             });
           },
           onLeave: () => {
-            gsap.to(cardElement, {
-              scale: 0.95,
-              opacity: 0.8,
-              duration: 0.3,
-              ease: "power2.out"
-            });
+            // Reset animation when leaving view
+            resetAnimation();
           },
           onEnterBack: () => {
+            // Replay animation when scrolling back
             gsap.to(cardElement, {
-              scale: 1,
               opacity: 1,
-              duration: 0.4,
-              ease: "power2.out"
+              y: 0,
+              x: 0,
+              scale: 1,
+              rotation: 0,
+              duration: 1,
+              ease: "power3.out",
+              delay: index * 0.15
             });
+          },
+          onLeaveBack: () => {
+            // Reset when leaving upward
+            resetAnimation();
           }
         });
       });
@@ -637,7 +650,16 @@ const Home = () => {
                 institution: 'Indian Institute of Technology Patna',
                 year: 'Expected: May 2025',
                 grade: 'CGPA: 7.75',
+                description: 'Research focus on nanowire GAA MOSFETs and semiconductor device physics',
                 side: 'left'
+              },
+              {
+                degree: 'Research Publications',
+                institution: 'International Journals & Conferences',
+                year: '2021-2024',
+                grade: '15+ Publications',
+                description: 'Contributing to cutting-edge research in VLSI and semiconductor technology',
+                side: 'right'
               },
               {
                 degree: 'M.Tech in VLSI Design',
@@ -645,6 +667,15 @@ const Home = () => {
                 year: '2020',
                 grade: 'CGPA: 8.42',
                 extra: '5th Rank in Department',
+                description: 'Specialized in advanced VLSI design methodologies and semiconductor devices',
+                side: 'left'
+              },
+              {
+                degree: 'IEEE EDS Chapter Leadership',
+                institution: 'Student Branch Chapter Chair',
+                year: '2022-Present',
+                grade: 'Leadership Role',
+                description: 'Leading student initiatives and promoting semiconductor education',
                 side: 'right'
               },
               {
@@ -653,21 +684,30 @@ const Home = () => {
                 year: '2016',
                 grade: 'Percentage: 80.00%',
                 extra: '2nd Rank in Department',
+                description: 'Foundation in electronics, communication systems, and digital signal processing',
                 side: 'left'
               }
             ].map((edu, index) => (
               <div 
                 key={edu.degree}
-                className="education-card flex flex-col md:flex-row items-center mb-16 relative"
+                className="education-card flex flex-col md:flex-row items-center mb-24 relative"
               >
                 <div className={`md:w-1/2 ${edu.side === 'left' ? 'md:pr-12 md:text-right' : 'md:pl-12 md:order-3'} mb-8 md:mb-0`}>
-                  <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105">
+                  <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/30 transition-all duration-500 transform hover:scale-105 shadow-xl hover:shadow-blue-500/20">
                     <CardContent className="p-8">
-                      <h3 className="text-2xl font-bold text-blue-400 mb-3 font-display">{edu.degree}</h3>
-                      <p className="text-slate-300 mb-3 text-lg">{edu.institution}</p>
-                      <p className="text-slate-400 mb-3">{edu.year}</p>
-                      <p className="text-blue-300 font-semibold text-lg">{edu.grade}</p>
-                      {edu.extra && <p className="text-slate-400 mt-3">{edu.extra}</p>}
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="px-3 py-1 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 text-blue-300 rounded-full text-sm font-medium border border-blue-500/30">{edu.year}</span>
+                        <GraduationCap className="text-blue-400" size={28} />
+                      </div>
+                      <h3 className="text-2xl font-bold text-blue-400 mb-4 font-display">{edu.degree}</h3>
+                      <p className="text-slate-300 mb-3 text-lg font-medium">{edu.institution}</p>
+                      <p className="text-blue-300 font-semibold text-lg mb-3">{edu.grade}</p>
+                      {edu.description && (
+                        <p className="text-slate-400 text-sm leading-relaxed mb-3 italic">{edu.description}</p>
+                      )}
+                      {edu.extra && (
+                        <p className="text-green-400 font-medium text-sm bg-green-500/15 px-3 py-2 rounded-full inline-block border border-green-500/30">{edu.extra}</p>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
