@@ -306,7 +306,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 font-body overflow-x-hidden max-w-[880px] mx-auto">
+    <div className="min-h-screen bg-slate-950 text-slate-50 font-body overflow-x-hidden">
       {/* Floating Island Navigation */}
       <nav 
         ref={navRef}
@@ -440,7 +440,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="relative z-10 text-center max-w-5xl mx-auto px-6">
+        <div className="relative z-10 text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="hero-greeting mb-8">
             <span className="text-blue-400 text-xl font-medium tracking-wide">Hi 👋, I am</span>
           </div>
@@ -478,7 +478,7 @@ const Home = () => {
 
       {/* About Section */}
       <section ref={aboutRef} id="about" className="py-32 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
-        <div className="w-full mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">About Me</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
@@ -508,7 +508,7 @@ const Home = () => {
 
       {/* Skills Section */}
       <section ref={skillsRef} id="skills" className="py-32">
-        <div className="w-full mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">Technical Skills</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
@@ -582,7 +582,7 @@ const Home = () => {
           {/* Core Sciences */}
           <div className="animate-on-scroll">
             <h3 className="text-3xl font-bold mb-12 text-blue-400 font-display text-center">Core Sciences</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto perspective-1000">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto perspective-1000">
               {[
                 { 
                   name: 'Physics', 
@@ -614,13 +614,13 @@ const Home = () => {
 
       {/* Education Section */}
       <section id="education" className="py-32 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
-        <div className="w-full mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">Academic Journey</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
           </div>
 
-          <div className="relative max-w-4xl mx-auto">
+          <div className="relative max-w-6xl mx-auto">
             {/* Enhanced timeline with flowing elements */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 to-indigo-500"></div>
             
@@ -708,7 +708,7 @@ const Home = () => {
 
       {/* Publications Section */}
       <section id="publications" className="py-32">
-        <div className="w-full mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">Publications</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
@@ -800,7 +800,7 @@ const Home = () => {
 
       {/* Work Experience Section */}
       <section id="experience" className="py-32 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
-        <div className="w-full mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">Work Experience</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
@@ -854,7 +854,7 @@ const Home = () => {
 
       {/* Contact Section */}
       <section id="contact" className="py-32">
-        <div className="w-full mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-on-scroll text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">Let's Connect</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto mb-8"></div>
