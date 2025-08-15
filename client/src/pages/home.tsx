@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { Mail, MapPin, Phone, ExternalLink, FileText, Users, Award, Trophy, Github, Linkedin, GraduationCap, ChevronRight, Menu, X, BookOpen, Cpu, Zap, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 // Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const Home = () => {
   const [currentText, setCurrentText] = useState("");
@@ -118,8 +119,8 @@ const Home = () => {
           if (navRef.current) {
             gsap.to(navRef.current, {
               y: progress > 0.1 ? 0 : -100,
-              duration: 0.3,
-              ease: "power2.out"
+              duration: 0.6,
+              ease: "power3.out"
             });
           }
         }
@@ -142,96 +143,6 @@ const Home = () => {
         start: "top 85%"
       });
 
-      // Education cards storytelling animation
-      const educationCards = document.querySelectorAll(".education-card");
-      educationCards.forEach((card, index) => {
-        const cardElement = card as HTMLElement;
-        const isLeft = index % 2 === 0;
-        
-        // Initial position - cards start off-screen
-        gsap.set(cardElement, {
-          x: isLeft ? -400 : 400,
-          opacity: 0,
-          rotation: isLeft ? -15 : 15,
-          scale: 0.8
-        });
-        
-        // Animation to bring cards into timeline
-        ScrollTrigger.create({
-          trigger: cardElement,
-          start: "top 90%",
-          end: "top 30%",
-          onEnter: () => {
-            const tl = gsap.timeline();
-            
-            // Phase 1: Card appears and moves toward timeline
-            tl.to(cardElement, {
-              opacity: 1,
-              x: isLeft ? -50 : 50,
-              rotation: isLeft ? -8 : 8,
-              scale: 0.95,
-              duration: 0.8,
-              ease: "power2.out"
-            })
-            // Phase 2: Card settles into final position
-            .to(cardElement, {
-              x: 0,
-              rotation: 0,
-              scale: 1,
-              duration: 0.6,
-              ease: "back.out(1.2)"
-            }, "-=0.3")
-            // Phase 3: Subtle pulse to highlight connection to timeline
-            .to(cardElement, {
-              scale: 1.02,
-              duration: 0.2,
-              ease: "power2.inOut",
-              yoyo: true,
-              repeat: 1
-            });
-          },
-          onLeave: () => {
-            gsap.to(cardElement, {
-              scale: 0.98,
-              opacity: 0.8,
-              duration: 0.3,
-              ease: "power2.out"
-            });
-          },
-          onEnterBack: () => {
-            gsap.to(cardElement, {
-              scale: 1,
-              opacity: 1,
-              duration: 0.4,
-              ease: "power2.out"
-            });
-          }
-        });
-      });
-      
-      // Timeline orbs animation - they light up as cards join
-      const timelineOrbs = document.querySelectorAll(".timeline-orb");
-      timelineOrbs.forEach((orb, index) => {
-        ScrollTrigger.create({
-          trigger: `.education-card:nth-child(${index + 1})`,
-          start: "top 70%",
-          onEnter: () => {
-            gsap.to(orb, {
-              scale: 1.5,
-              duration: 0.3,
-              ease: "back.out(1.7)",
-              yoyo: true,
-              repeat: 1
-            });
-            
-            gsap.to(orb, {
-              boxShadow: "0 0 20px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.4)",
-              duration: 0.5,
-              ease: "power2.out"
-            });
-          }
-        });
-      });
 
       // Enhanced floating background elements with wider range
       gsap.set(".bg-particle", { 
@@ -269,42 +180,26 @@ const Home = () => {
         }
       });
 
-      // Skill cards cursor-following hover animations
+      // Simple tile hover effect - just raise slightly
       const skillCards = document.querySelectorAll(".skill-card");
       skillCards.forEach((card) => {
         const cardElement = card as HTMLElement;
         
-        cardElement.addEventListener("mousemove", (e) => {
-          const rect = cardElement.getBoundingClientRect();
-          const x = e.clientX - rect.left - rect.width / 2;
-          const y = e.clientY - rect.top - rect.height / 2;
-          
-          // Wider range with instant response like weight on thin support
-          const rotateX = -(y / rect.height) * 35;
-          const rotateY = (x / rect.width) * 35;
-          
-          // Additional weighted table effect - tilt more dramatically toward cursor
-          const distance = Math.sqrt(x * x + y * y);
-          const maxDistance = Math.sqrt(rect.width * rect.width + rect.height * rect.height) / 2;
-          const intensity = Math.min(distance / maxDistance, 1);
-          
+        cardElement.addEventListener("mouseenter", () => {
           gsap.to(cardElement, {
-            rotateX: rotateX * (1 + intensity * 0.5),
-            rotateY: rotateY * (1 + intensity * 0.5),
-            transformPerspective: 800,
-            duration: 0,
-            ease: "none",
-            scale: 1 + intensity * 0.02
+            y: -8,
+            scale: 1.02,
+            duration: 0.3,
+            ease: "power2.out"
           });
         });
         
         cardElement.addEventListener("mouseleave", () => {
           gsap.to(cardElement, {
-            rotateX: 0,
-            rotateY: 0,
+            y: 0,
             scale: 1,
-            duration: 0.8,
-            ease: "elastic.out(1, 0.3)"
+            duration: 0.3,
+            ease: "power2.out"
           });
         });
       });
@@ -352,13 +247,11 @@ const Home = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
+      const targetY = element.offsetTop - 80;
       gsap.to(window, {
-        scrollTo: {
-          y: element,
-          offsetY: 80
-        },
-        duration: 2.5,
-        ease: "power4.inOut"
+        scrollTo: { y: targetY, autoKill: false },
+        duration: 1.5,
+        ease: "power3.inOut"
       });
     }
     setMobileMenuOpen(false);
