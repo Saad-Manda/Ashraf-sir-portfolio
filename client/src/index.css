@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -37,9 +39,9 @@
   --sidebar-accent-foreground: hsl(217, 91%, 60%);
   --sidebar-border: hsl(217, 33%, 17%);
   --sidebar-ring: hsl(217, 91%, 60%);
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: Menlo, monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', 'Source Code Pro', monospace;
   --radius: 0.75rem;
   --shadow-2xs: 0px 2px 0px 0px hsl(217, 91%, 60%, 0.05);
   --shadow-xs: 0px 2px 0px 0px hsl(217, 91%, 60%, 0.05);
@@ -86,9 +88,9 @@
   --sidebar-accent-foreground: hsl(217, 91%, 60%);
   --sidebar-border: hsl(217, 33%, 17%);
   --sidebar-ring: hsl(217, 91%, 60%);
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: Menlo, monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', 'Source Code Pro', monospace;
   --radius: 0.75rem;
 }
 
@@ -104,6 +106,48 @@
 }
 
 @layer utilities {
+  .font-display {
+    font-family: var(--font-serif);
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'pnum' 1, 'tnum' 0, 'onum' 1, 'lnum' 0, 'dlig' 1;
+  }
+  
+  .font-body {
+    font-family: var(--font-sans);
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'pnum' 1, 'tnum' 0, 'onum' 0, 'lnum' 1;
+    letter-spacing: -0.011em;
+  }
+  
+  .font-mono {
+    font-family: var(--font-mono);
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'zero' 1;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-gradient-blue {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #0f172a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .glass {
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(17, 25, 40, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+  
+  .glass-nav {
+    backdrop-filter: blur(20px) saturate(180%);
+    background-color: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
@@ -118,11 +162,23 @@
   }
 
   .skill-card {
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .skill-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.25);
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
   }
 }
