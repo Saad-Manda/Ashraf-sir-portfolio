@@ -771,7 +771,13 @@ const Home = () => {
                   href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=K5JC1goAAAAJ&authuser=1&citation_for_view=K5JC1goAAAAJ:qjMakFHDy7sC'
                 }
               ].map((paper, index) => (
-                <div key={paper.title} className="animate-on-scroll">
+                <a
+                  key={paper.title}
+                  href={paper.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block hover:no-underline"
+                >
                   <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group">
                     <CardContent className="p-8">
                       <div className="flex items-start gap-6">
@@ -781,12 +787,15 @@ const Home = () => {
                         <div className="flex-1">
                           <h4 className="text-xl font-bold mb-3 text-slate-200 group-hover:text-blue-400 transition-colors duration-300 leading-tight">{paper.title}</h4>
                           <p className="text-slate-400 mb-3">{paper.authors}</p>
-                          <p className="text-blue-300 font-semibold">{paper.journal}</p>
+                          <p className="text-blue-300 font-semibold">
+                            {paper.journal}
+                            <ExternalLink className="inline-block ml-2 w-4 h-4 text-blue-300 group-hover:text-blue-400" />
+                          </p>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
-                </div>
+                </a>
               ))}
             </div>
           </div>
@@ -812,13 +821,13 @@ const Home = () => {
                 }
 
               ].map((paper, index) => (
-                <div key={paper.title} className="animate-on-scroll">
-                  <a
-                    href={paper.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block hover:no-underline"
-                  ></a>
+                <a
+                  key={paper.title}
+                  href={paper.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block hover:no-underline"
+                >
                   <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group">
                     <CardContent className="p-8">
                       <div className="flex items-start gap-6">
@@ -828,12 +837,15 @@ const Home = () => {
                         <div className="flex-1">
                           <h4 className="text-xl font-bold mb-3 text-slate-200 group-hover:text-blue-400 transition-colors duration-300 leading-tight">{paper.title}</h4>
                           <p className="text-slate-400 mb-3">{paper.authors}</p>
-                          <p className="text-blue-300 font-semibold">{paper.conference}</p>
+                          <p className="text-blue-300 font-semibold">
+                            {paper.conference}
+                            <ExternalLink className="inline-block ml-2 w-4 h-4 text-blue-300 group-hover:text-blue-400" />
+                          </p>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
-                </div>
+                </a>
               ))}
             </div>
           </div>
