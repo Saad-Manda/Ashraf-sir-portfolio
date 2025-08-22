@@ -15,7 +15,7 @@ const Home = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [charIndex, setCharIndex] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
+
   const navRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
@@ -23,9 +23,8 @@ const Home = () => {
   const mousePos = useRef({ x: 0, y: 0 });
 
   const texts = [
-    'PhD Researcher in Electrical Engineering',
-    'Semiconductor Device Physics Expert', 
-    'VLSI Design Specialist',
+    'Research Scholar in Electrical Engineering',
+    'Semiconductor Physics & VLSI Design',
     'IEEE EDS Chapter Chair',
     'Published Research Scholar'
   ];
@@ -34,7 +33,7 @@ const Home = () => {
     const speed = isDeleting ? 50 : 100;
     const timeout = setTimeout(() => {
       const currentFullText = texts[textIndex];
-      
+
       if (isDeleting) {
         setCurrentText(currentFullText.substring(0, charIndex - 1));
         setCharIndex(charIndex - 1);
@@ -59,7 +58,7 @@ const Home = () => {
     const ctx = gsap.context(() => {
       // Hero section animations
       const tl = gsap.timeline();
-      
+
       tl.fromTo(".hero-greeting", {
         opacity: 0,
         y: 30
@@ -69,33 +68,33 @@ const Home = () => {
         duration: 1,
         ease: "power3.out"
       })
-      .fromTo(".hero-name", {
-        opacity: 0,
-        y: 60
-      }, {
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: "power3.out"
-      }, "-=0.7")
-      .fromTo(".hero-description", {
-        opacity: 0,
-        y: 40
-      }, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power3.out"
-      }, "-=0.8")
-      .fromTo(".hero-buttons", {
-        opacity: 0,
-        y: 30
-      }, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out"
-      }, "-=0.5");
+        .fromTo(".hero-name", {
+          opacity: 0,
+          y: 60
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: "power3.out"
+        }, "-=0.7")
+        .fromTo(".hero-description", {
+          opacity: 0,
+          y: 40
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out"
+        }, "-=0.8")
+        .fromTo(".hero-buttons", {
+          opacity: 0,
+          y: 30
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        }, "-=0.5");
 
       // Floating particles animation
       gsap.to(".particle", {
@@ -145,11 +144,11 @@ const Home = () => {
 
 
       // Enhanced floating background elements with wider range
-      gsap.set(".bg-particle", { 
+      gsap.set(".bg-particle", {
         scale: 0,
         rotation: 0
       });
-      
+
       gsap.to(".bg-particle", {
         scale: "random(0.8, 1.5)",
         rotation: 360,
@@ -184,7 +183,7 @@ const Home = () => {
       const skillCards = document.querySelectorAll(".skill-card");
       skillCards.forEach((card) => {
         const cardElement = card as HTMLElement;
-        
+
         cardElement.addEventListener("mouseenter", () => {
           gsap.to(cardElement, {
             y: -8,
@@ -193,7 +192,7 @@ const Home = () => {
             ease: "power2.out"
           });
         });
-        
+
         cardElement.addEventListener("mouseleave", () => {
           gsap.to(cardElement, {
             y: 0,
@@ -209,7 +208,7 @@ const Home = () => {
       educationCards.forEach((card, index) => {
         const cardElement = card as HTMLElement;
         const isLeft = index % 2 === 0;
-        
+
         // Initial hidden state
         const initialState = {
           opacity: 0,
@@ -218,7 +217,7 @@ const Home = () => {
           scale: 0.95,
           rotation: 0
         };
-        
+
         const animatedState = {
           opacity: 1,
           y: 0,
@@ -226,10 +225,10 @@ const Home = () => {
           scale: 1,
           rotation: 0
         };
-        
+
         // Set initial state
         gsap.set(cardElement, initialState);
-        
+
         // Animation only plays when scrolling down into view
         ScrollTrigger.create({
           trigger: cardElement,
@@ -253,24 +252,24 @@ const Home = () => {
       // Global mouse tracking for subtle parallax effects
       const handleMouseMove = (e: MouseEvent) => {
         mousePos.current = { x: e.clientX, y: e.clientY };
-        
+
         const xPercent = (e.clientX / window.innerWidth - 0.5) * 2;
         const yPercent = (e.clientY / window.innerHeight - 0.5) * 2;
-        
+
         gsap.to(".parallax-light", {
           x: xPercent * 50,
           y: yPercent * 50,
           duration: 0.8,
           ease: "power2.out"
         });
-        
+
         gsap.to(".parallax-medium", {
           x: xPercent * 30,
           y: yPercent * 30,
           duration: 0.6,
           ease: "power2.out"
         });
-        
+
         gsap.to(".parallax-heavy", {
           x: xPercent * 15,
           y: yPercent * 15,
@@ -278,9 +277,9 @@ const Home = () => {
           ease: "power2.out"
         });
       };
-      
+
       window.addEventListener("mousemove", handleMouseMove);
-      
+
       return () => {
         window.removeEventListener("mousemove", handleMouseMove);
       };
@@ -306,7 +305,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 font-body overflow-x-hidden">
       {/* Floating Island Navigation */}
-      <nav 
+      <nav
         ref={navRef}
         className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300"
         style={{ transform: "translateX(-50%) translateY(0px)" }}
@@ -316,7 +315,7 @@ const Home = () => {
             <div className="text-base font-bold text-gradient-blue font-display">
               Ashraf Maniyar
             </div>
-            
+
             <div className="hidden md:flex space-x-4">
               {['Home', 'About', 'Skills', 'Education', 'Publications', 'Experience', 'Contact'].map((item) => (
                 <button
@@ -329,7 +328,7 @@ const Home = () => {
                 </button>
               ))}
             </div>
-            
+
             <button
               className="md:hidden text-slate-300 hover:text-blue-400 transition-colors duration-300"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -364,7 +363,7 @@ const Home = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(147,51,234,0.08),transparent_50%)]"></div>
-        
+
         {/* Enhanced floating particles and background elements */}
         <div className="absolute inset-0">
           {[...Array(12)].map((_, i) => (
@@ -377,7 +376,7 @@ const Home = () => {
               }}
             />
           ))}
-          
+
           {/* Geometric floating shapes */}
           {[...Array(6)].map((_, i) => (
             <div
@@ -401,7 +400,7 @@ const Home = () => {
               )}
             </div>
           ))}
-          
+
           {/* Larger background particles */}
           {[...Array(8)].map((_, i) => (
             <div
@@ -417,20 +416,20 @@ const Home = () => {
               <div className="w-full h-full bg-gradient-to-br from-blue-500/10 to-indigo-600/10 rounded-full blur-xl" />
             </div>
           ))}
-          
+
           {/* Quirky professional elements - floating code snippets */}
           <div className="absolute top-20 right-10 parallax-light opacity-20">
             <div className="font-mono text-blue-400/40 text-xs rotate-12 animate-pulse">
               {'{ research: "nanowire" }'}
             </div>
           </div>
-          
+
           <div className="absolute bottom-32 left-16 parallax-medium opacity-20">
             <div className="font-mono text-purple-400/40 text-xs -rotate-6 animate-pulse">
               PhD.execute();
             </div>
           </div>
-          
+
           <div className="absolute top-1/3 right-1/4 parallax-heavy opacity-20">
             <div className="font-mono text-green-400/40 text-xs rotate-3 animate-pulse">
               IEEE.publish(research);
@@ -441,28 +440,28 @@ const Home = () => {
         <div className="relative z-10 text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="hero-greeting mb-8">
           </div>
-          
+
           <h1 className="hero-name text-6xl md:text-8xl font-black mb-8 font-display leading-none">
             <span className="text-white drop-shadow-2xl" style={{ textShadow: '0 0 40px rgba(255,255,255,0.8), 0 0 80px rgba(59,130,246,0.4)' }}>Ashraf</span>
             <br />
             <span className="text-gradient-blue opacity-90">Maniyar</span>
           </h1>
-          
+
           <div className="hero-description text-xl md:text-3xl text-slate-300 mb-12 h-20 font-light">
             <span className="border-r-2 border-blue-400 pr-2 font-mono" data-testid="typewriter-text">
               {currentText}
             </span>
           </div>
-          
+
           <div className="hero-buttons flex flex-col sm:flex-row gap-6 justify-center">
-            <Button 
+            <Button
               onClick={() => scrollToSection('contact')}
               className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 px-8 py-4 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
               data-testid="button-contact"
             >
               Get In Touch
             </Button>
-            <Button 
+            <Button
               variant="outline"
               className="border-slate-600 hover:border-blue-400 text-slate-300 hover:text-blue-400 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm hover:backdrop-blur-md transform hover:scale-105 transition-all duration-300"
               data-testid="button-resume"
@@ -480,14 +479,14 @@ const Home = () => {
             <h2 className="text-5xl md:text-6xl font-black mb-6 font-display text-gradient">About Me</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="animate-on-scroll perspective-1000">
               <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto rounded-3xl glass p-6 sm:p-8 flex items-center justify-center transform hover:rotateY-6 transition-all duration-500 preserve-3d">
                 <GraduationCap size={80} className="text-blue-400/80 sm:w-[100px] sm:h-[100px] lg:w-[120px] lg:h-[120px]" />
               </div>
             </div>
-            
+
             <div className="animate-on-scroll space-y-6 lg:space-y-8">
               <p className="text-lg sm:text-xl text-slate-300 leading-relaxed font-light">
                 I am a dedicated <span className="text-blue-400 font-semibold">PhD researcher</span> in Electrical Engineering at IIT Patna, specializing in <span className="text-blue-400 font-semibold">semiconductor device physics</span> and <span className="text-blue-400 font-semibold">VLSI design</span>. My research focuses on nanowire GAA MOSFETs, with particular emphasis on process-induced effects and their impact on device performance.
@@ -542,22 +541,22 @@ const Home = () => {
             <h3 className="text-3xl font-bold mb-12 text-blue-400 font-display text-center">Research Areas</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 perspective-1000">
               {[
-                { 
-                  name: 'Machine Learning', 
-                  desc: 'Applied ML techniques in semiconductor device modeling and analysis', 
-                  icon: Award, 
+                {
+                  name: 'Machine Learning',
+                  desc: 'Applied ML techniques in semiconductor device modeling and analysis',
+                  icon: Award,
                   color: 'from-emerald-500 to-teal-500'
                 },
-                { 
-                  name: 'User Research', 
-                  desc: 'Research methodology and experimental design for academic studies', 
-                  icon: Users, 
+                {
+                  name: 'User Research',
+                  desc: 'Research methodology and experimental design for academic studies',
+                  icon: Users,
                   color: 'from-blue-500 to-indigo-500'
                 },
-                { 
-                  name: 'Numerical Methods', 
-                  desc: 'Advanced mathematical modeling and computational analysis', 
-                  icon: Trophy, 
+                {
+                  name: 'Numerical Methods',
+                  desc: 'Advanced mathematical modeling and computational analysis',
+                  icon: Trophy,
                   color: 'from-purple-500 to-pink-500'
                 }
               ].map((area, index) => (
@@ -581,13 +580,13 @@ const Home = () => {
             <h3 className="text-3xl font-bold mb-12 text-blue-400 font-display text-center">Core Sciences</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto perspective-1000">
               {[
-                { 
-                  name: 'Physics', 
+                {
+                  name: 'Physics',
                   desc: 'Specialization in semiconductor physics and quantum mechanics',
                   color: 'from-cyan-500 to-blue-500'
                 },
-                { 
-                  name: 'Chemistry', 
+                {
+                  name: 'Chemistry',
                   desc: 'Understanding of materials science and chemical processes',
                   color: 'from-rose-500 to-orange-500'
                 }
@@ -620,7 +619,7 @@ const Home = () => {
           <div className="relative max-w-6xl mx-auto">
             {/* Enhanced timeline with flowing elements */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 to-indigo-500"></div>
-            
+
             {/* Enhanced flowing orbs along timeline */}
             <div className="absolute left-1/2 top-10 w-3 h-3 bg-blue-400/40 rounded-full animate-pulse parallax-light" style={{ transform: 'translateX(-50%)' }}></div>
             <div className="absolute left-1/2 top-1/3 w-2 h-2 bg-purple-400/40 rounded-full animate-pulse parallax-medium" style={{ transform: 'translateX(-50%)', animationDelay: '1s' }}></div>
@@ -672,7 +671,7 @@ const Home = () => {
                 side: 'left'
               }
             ].map((edu, index) => (
-              <div 
+              <div
                 key={edu.degree}
                 className="education-card flex flex-col md:flex-row items-center mb-24 relative"
               >
@@ -747,19 +746,29 @@ const Home = () => {
                   title: "Impact of Process-Induced Inclined Side-Walls on Gate-Induced Drain Leakage (GIDL) Current of Nanowire GAA MOSFETs",
                   authors: "A. Maniyar, P. S. T. N. Srinivas, K. -S. Chang-Liao, and P. K. Tiwari",
                   journal: "IEEE Transactions on Electron Devices, 2022",
-                  color: "from-blue-500 to-cyan-500"
+                  color: "from-blue-500 to-cyan-500",
+                  href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=K5JC1goAAAAJ&authuser=1&citation_for_view=K5JC1goAAAAJ:d1gkVwhDpl0C'
                 },
                 {
                   title: "Impact of Process-Induced Inclined Sidewalls on Gate Leakage Current of Nanowire GAA MOSFETs",
                   authors: "A. Maniyar, P. S. T. N. Srinivas, K. -S. Chang-Liao, and P. K. Tiwari",
                   journal: "IEEE Transactions on Electron Devices, 2024",
-                  color: "from-purple-500 to-pink-500"
+                  color: "from-purple-500 to-pink-500",
+                  href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=K5JC1goAAAAJ&authuser=1&citation_for_view=K5JC1goAAAAJ:2osOgNQ5qMEC'
                 },
                 {
                   title: "Visible region absorption in TMDs/phosphorene heterostructures for use in solar energy conversion applications",
                   authors: "A. Maniyar, and Sudhanshu Choudhary",
                   journal: "RSC Advances, 2020",
-                  color: "from-green-500 to-teal-500"
+                  color: "from-green-500 to-teal-500",
+                  href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=K5JC1goAAAAJ&authuser=1&citation_for_view=K5JC1goAAAAJ:u-x6o8ySG0sC'
+                },
+                {
+                  title: "Si/SiGe Superlattice-Based Double Gate Feedback Field-Effect Transistor and its application in 1T-DRAM",
+                  authors: "Subir Das, Ashraf Maniyar, Pushp Raj, Jawar Singh, Pramod Kumar Tiwari",
+                  journal: "Microelectronics Journal",
+                  color: "from-blue-500 to-cyan-500",
+                  href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=K5JC1goAAAAJ&authuser=1&citation_for_view=K5JC1goAAAAJ:qjMakFHDy7sC'
                 }
               ].map((paper, index) => (
                 <div key={paper.title} className="animate-on-scroll">
@@ -787,20 +796,29 @@ const Home = () => {
             <h3 className="text-3xl font-bold mb-12 text-blue-400 font-display">Conference Papers</h3>
             <div className="space-y-8">
               {[
-                {
-                  title: "Impact of Substrate Doping on Gate-Induced Drain Leakage Current in FD SOI MOSFETs",
-                  authors: "A. Maniyar, P. S. T. N. Srinivas, and P. K. Tiwari",
-                  conference: "International Conference on Electrical Engineering (ICEE), Bangalore, 2022",
-                  color: "from-orange-500 to-red-500"
-                },
+                // {
+                //   title: "Impact of Substrate Doping on Gate-Induced Drain Leakage Current in FD SOI MOSFETs",
+                //   authors: "A. Maniyar, P. S. T. N. Srinivas, and P. K. Tiwari",
+                //   conference: "International Conference on Electrical Engineering (ICEE), Bangalore, 2022",
+                //   color: "from-orange-500 to-red-500",
+                //   href: ''
+                // },
                 {
                   title: "Impact of Process-Induced Inclined Sidewalls on Small Signal Parameters of Silicon Nanowire GAAMOSFET",
                   authors: "A. Maniyar, P. S. T. N. Srinivas, and P. K. Tiwari",
                   conference: "TENCON 2023 - 2023 IEEE Region 10 Conference, Chiang Mai, Thailand, 2023",
-                  color: "from-indigo-500 to-purple-500"
+                  color: "from-indigo-500 to-purple-500",
+                  href: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=K5JC1goAAAAJ&authuser=1&citation_for_view=K5JC1goAAAAJ:9yKSN-GCB0IC'
                 }
+
               ].map((paper, index) => (
                 <div key={paper.title} className="animate-on-scroll">
+                  <a
+                    href={paper.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block hover:no-underline"
+                  ></a>
                   <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group">
                     <CardContent className="p-8">
                       <div className="flex items-start gap-6">
@@ -912,7 +930,7 @@ const Home = () => {
                   color: "from-purple-500 to-pink-500"
                 }
               ].map((contact, index) => (
-                <Card 
+                <Card
                   key={contact.label}
                   className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105 group cursor-pointer"
                 >
@@ -929,15 +947,15 @@ const Home = () => {
 
             <div className="text-center mt-16">
               <div className="flex justify-center space-x-8">
-                <a 
-                  href="https://linkedin.com/in/ashraf-maniyar-82845191" 
+                <a
+                  href="https://linkedin.com/in/ashraf-maniyar-82845191"
                   className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center hover:scale-110 transform transition-all duration-300 shadow-lg hover:shadow-xl"
                   data-testid="linkedin-link"
                 >
                   <Linkedin className="text-white" size={32} />
                 </a>
-                <a 
-                  href="https://scholar.google.co.in/citations?user=P-ouprAAAAAJ&hl=en" 
+                <a
+                  href="https://scholar.google.co.in/citations?user=P-ouprAAAAAJ&hl=en"
                   className="w-16 h-16 bg-gradient-to-br from-red-600 to-red-700 rounded-2xl flex items-center justify-center hover:scale-110 transform transition-all duration-300 shadow-lg hover:shadow-xl"
                   data-testid="scholar-link"
                 >
