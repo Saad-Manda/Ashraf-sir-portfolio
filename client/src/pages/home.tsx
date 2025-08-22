@@ -462,18 +462,19 @@ const Home = () => {
               Get In Touch
             </Button>
             <a
-              href="Ashraf-sir-portfolio/attached_assets/Ashraf cv__1755283681744.pdf"
+              href="/attached_assets/Ashraf cv__1755283681744.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block"
-            ></a>
-            <Button
-              variant="outline"
-              className="border-slate-600 hover:border-blue-400 text-slate-300 hover:text-blue-400 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm hover:backdrop-blur-md transform hover:scale-105 transition-all duration-300"
-              data-testid="button-resume"
             >
-              See Resumé
-            </Button>
+              <Button
+                variant="outline"
+                className="border-slate-600 hover:border-blue-400 text-slate-300 hover:text-blue-400 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm hover:backdrop-blur-md transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                data-testid="button-resume"
+              >
+                See Resumé <FileText className="w-5 h-5" />
+              </Button>
+            </a>
           </div>
         </div>
       </section>
