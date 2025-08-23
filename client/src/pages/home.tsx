@@ -974,7 +974,7 @@ const Home = () => {
                   <Linkedin className="text-white" size={32} />
                 </a>
                 <a
-                  href="https://scholar.google.co.in/citations?user=P-ouprAAAAAJ&hl=en"
+                  href="https://share.google/Z3fMfNO8rphKvn9LP"
                   className="w-16 h-16 bg-gradient-to-br from-red-600 to-red-700 rounded-2xl flex items-center justify-center hover:scale-110 transform transition-all duration-300 shadow-lg hover:shadow-xl"
                   data-testid="scholar-link"
                 >
