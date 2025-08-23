@@ -462,7 +462,7 @@ const Home = () => {
               Get In Touch
             </Button>
             <a
-              href="/assets/Ashraf_cv.pdf"
+              href="/assets/Ashraf cv__1755283681744.pdf" // This path will now work with the public folder
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block"
