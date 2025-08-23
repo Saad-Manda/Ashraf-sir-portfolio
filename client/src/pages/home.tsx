@@ -462,7 +462,7 @@ const Home = () => {
               Get In Touch
             </Button>
             <a
-              href="/attached_assets/Ashraf cv__1755283681744.pdf"
+              href="/assets/Ashraf_cv.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block"
