@@ -453,23 +453,23 @@ const Home = () => {
             </span>
           </div>
 
-          <div className="hero-buttons flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="hero-buttons flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Button
               onClick={() => scrollToSection('contact')}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 px-8 py-4 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 px-8 py-4 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 text-center"
               data-testid="button-contact"
             >
               Get In Touch
             </Button>
             <a
-              href="/assets/Ashraf cv__1755283681744.pdf" // This path will now work with the public folder
+              href="/assets/Ashraf cv__1755283681744.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block"
+              className="w-full sm:w-auto inline-block"
             >
               <Button
                 variant="outline"
-                className="border-slate-600 hover:border-blue-400 text-slate-300 hover:text-blue-400 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm hover:backdrop-blur-md transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                className="w-full sm:w-auto border-slate-600 hover:border-blue-400 text-slate-300 hover:text-blue-400 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm hover:backdrop-blur-md transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
                 data-testid="button-resume"
               >
                 See Resumé <FileText className="w-5 h-5" />
@@ -489,8 +489,12 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="animate-on-scroll perspective-1000">
-              <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto rounded-3xl glass p-6 sm:p-8 flex items-center justify-center transform hover:rotateY-6 transition-all duration-500 preserve-3d">
-                <GraduationCap size={80} className="text-blue-400/80 sm:w-[100px] sm:h-[100px] lg:w-[120px] lg:h-[120px]" />
+              <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto rounded-3xl glass p-2 sm:p-3 overflow-hidden transform hover:rotateY-6 transition-all duration-500 preserve-3d">
+                <img 
+                  src="/attached_assets/IMG_20231201_121652_1755972603198.jpg" 
+                  alt="Ashraf Maniyar" 
+                  className="w-full h-full object-cover rounded-2xl shadow-2xl"
+                />
               </div>
             </div>
 
@@ -965,20 +969,45 @@ const Home = () => {
             </div>
 
             <div className="text-center mt-16">
-              <div className="flex justify-center space-x-8">
+              <h3 className="text-2xl font-bold mb-8 text-blue-400">Connect With Me</h3>
+              <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
                 <a
                   href="https://linkedin.com/in/ashraf-maniyar-82845191"
-                  className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center hover:scale-110 transform transition-all duration-300 shadow-lg hover:shadow-xl"
-                  data-testid="linkedin-link"
+                  className="block"
+                  data-testid="linkedin-card"
                 >
-                  <Linkedin className="text-white" size={32} />
+                  <Card className="skill-card glass border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105 group cursor-pointer h-full">
+                    <CardContent className="p-6 text-center">
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                        <Linkedin className="text-white" size={32} />
+                      </div>
+                      <h4 className="text-xl font-bold mb-2 text-blue-400 group-hover:text-blue-300 transition-colors duration-300">LinkedIn</h4>
+                      <p className="text-slate-400 text-sm">Connect with me professionally and view my career journey</p>
+                      <div className="mt-4 flex items-center justify-center text-blue-400 group-hover:text-blue-300 transition-colors duration-300">
+                        <span className="text-sm font-medium">View Profile</span>
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </div>
+                    </CardContent>
+                  </Card>
                 </a>
                 <a
-                  href="https://share.google/Z3fMfNO8rphKvn9LP"
-                  className="w-16 h-16 bg-gradient-to-br from-red-600 to-red-700 rounded-2xl flex items-center justify-center hover:scale-110 transform transition-all duration-300 shadow-lg hover:shadow-xl"
-                  data-testid="scholar-link"
+                  href="https://scholar.google.com/citations?user=K5JC1goAAAAJ"
+                  className="block"
+                  data-testid="scholar-card"
                 >
-                  <GraduationCap className="text-white" size={32} />
+                  <Card className="skill-card glass border border-slate-700/50 hover:border-red-500/50 transition-all duration-300 transform hover:scale-105 group cursor-pointer h-full">
+                    <CardContent className="p-6 text-center">
+                      <div className="w-16 h-16 bg-gradient-to-br from-red-600 to-red-700 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                        <GraduationCap className="text-white" size={32} />
+                      </div>
+                      <h4 className="text-xl font-bold mb-2 text-red-400 group-hover:text-red-300 transition-colors duration-300">Google Scholar</h4>
+                      <p className="text-slate-400 text-sm">Explore my research publications and academic contributions</p>
+                      <div className="mt-4 flex items-center justify-center text-red-400 group-hover:text-red-300 transition-colors duration-300">
+                        <span className="text-sm font-medium">View Publications</span>
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </div>
+                    </CardContent>
+                  </Card>
                 </a>
               </div>
             </div>
