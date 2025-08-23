@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { Mail, MapPin, Phone, ExternalLink, FileText, Users, Award, Trophy, Github, Linkedin, GraduationCap, ChevronRight, Menu, X, BookOpen, Cpu, Zap, Code2 } from "lucide-react";
+import { Mail, Phone, ExternalLink, FileText, Users, Award, Trophy, Github, Linkedin, GraduationCap, ChevronRight, Menu, X, BookOpen, Cpu, Zap, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -929,7 +929,7 @@ const Home = () => {
           </div>
 
           <div className="animate-on-scroll max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
               {[
                 {
                   icon: Mail,
@@ -944,13 +944,6 @@ const Home = () => {
                   value: "+91-8619990216",
                   href: "tel:+918619990216",
                   color: "from-green-500 to-teal-500"
-                },
-                {
-                  icon: MapPin,
-                  label: "Location",
-                  value: "IIT Patna, Bihar",
-                  href: "#",
-                  color: "from-purple-500 to-pink-500"
                 }
               ].map((contact, index) => (
                 <Card
