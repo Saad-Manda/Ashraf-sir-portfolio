@@ -491,7 +491,7 @@ const Home = () => {
             <div className="animate-on-scroll perspective-1000">
               <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto rounded-3xl glass p-2 sm:p-3 overflow-hidden transform hover:rotateY-6 transition-all duration-500 preserve-3d">
                 <img 
-                  src="/attached_assets/IMG_20231201_121652_1755972603198.jpg" 
+                  src="/ashraf-photo.jpg" 
                   alt="Ashraf Maniyar" 
                   className="w-full h-full object-cover rounded-2xl shadow-2xl"
                 />
